@@ -53,6 +53,8 @@ import ghidra.util.*;
 import ghidra.util.filechooser.GhidraFileFilter;
 import ghidra.util.task.TaskLauncher;
 
+import ghidra.util.Msg;
+
 public class BatchImportDialog extends DialogComponentProvider {
 
 	private static final String PREF_STRIPCONTAINER = "BATCHIMPORT.STRIPCONTAINER";
@@ -425,8 +427,11 @@ public class BatchImportDialog extends DialogComponentProvider {
 	private boolean addSources(List<FSRL> filesToAdd) {
 
 		List<FSRL> updatedFiles = filesToAdd.stream().map(FSRL::convertRootToContainer).toList();
+		Msg.info(this, "Updated files: " + updatedFiles);
+
 
 		List<FSRL> badFiles = batchInfo.addFiles(updatedFiles);
+		Msg.info(this, "Bad files: " + badFiles);
 		if (!badFiles.isEmpty()) {
 			StringBuilder sb = new StringBuilder();
 			for (FSRL fsrl : badFiles) {
